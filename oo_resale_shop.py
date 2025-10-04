@@ -1,43 +1,42 @@
-from Computer import Computer 
+from computer import Computer 
 
-class ResaleShop: #Class that allows you to buy computer (add it from the inventory), sell computer (remove it from the inventory) and shows the inventory when asked
-    # computer_ID: int
-    store_Balance: float 
+class ResaleShop: 
+    
 
-    # What attributes will it need?
-    inventory : list = []
-    # How will you set up your constructor?
-    # Remember: in python, all constructors have the same name (__init__)
+   
+    inventory: list = []
+   
+    def __init__(self, inventory:list):
+        self.inventory== inventory
 
-    def __init__(self, store_balance:float, inventory:list):
-        self.inventory= inventory
-        self.store_Balance = store_balance
-
-    def buy_Computer(self, computer:Computer):
+    def buy(self, computer:Computer):
         self.inventory.append(computer)
-        # self.inventory.index = self.computer_ID
-        self.store_Balance -= computer.price
-        # print(computer.description, "has a computer ID of", self.inventory.index)
-        print(computer.description, "has been purchased for $", computer.price, ". The store's balance is now $", self.store_Balance)
+        print(computer.description, "has been purchased for $", computer.price, ".")
 
-    def sell_Computer(self, computer:Computer):
-        self.inventory.remove(computer)
-        self.store_Balance += computer.price
-        print(computer.description, "has been sold for $", computer.price, ". The store's balance is now $", self.store_Balance)
+    def sell(self, computer:Computer):
+        for i in self.inventory:
+            if computer == i:
+                self.inventory.remove(computer)
+                print(computer.description, "has been sold for $", computer.price, ".")
+            else :
+                print(computer.description, "could not be found within our inventory.")
+        
 
-    def show_Inventory(self):
+    def printInventory(self):
         for computer in self.inventory:
             print(computer.description, "is in Resale Shop's Inventory")
 
 
 def main():
     newComputer: Computer = Computer("2019 Macbook Pro", "Intel", 256, 16, "High Sierra", 2019, 1000)
-    newComputer.updatePrice(300)
+    myComputer: Computer = Computer("2013 Macbook", "Windows", 128, 16, "Big Sur", 2013, 300)
     empty_List = []
-    newresaleShop: ResaleShop = ResaleShop(3000.00, empty_List)
-    newresaleShop.buy_Computer(newComputer)
-    newresaleShop.show_Inventory() 
-    newresaleShop.sell_Computer(newComputer)
+    newresaleShop: ResaleShop = ResaleShop(empty_List)
+    newresaleShop.buy(newComputer)
+    newresaleShop.buy(myComputer)
+    newresaleShop.printInventory()
+    newresaleShop.sell(newComputer)
+
 
 if __name__ == "__main__":
     main()
